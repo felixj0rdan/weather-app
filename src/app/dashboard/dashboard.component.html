@@ -14,11 +14,32 @@
         <mat-grid-tile colspan="3" rowspan="1" >
             <div class="tile1" >
                 <div class="current" >
-                    <div class="temp" *ngIf="!isF">{{weatherData?.current?.temp_c}} <sup>°C</sup></div>
-                    <div class="temp" *ngIf="isF">{{weatherData?.current?.temp_f}} <sup>°F</sup></div>
+                    <div class="temp" *ngIf="!isF">{{weatherData?.current?.temp_c}} <sup class="main-sup">°C</sup></div>
+                    <div class="temp" *ngIf="isF">{{weatherData?.current?.temp_f}} <sup class="main-sup">°F</sup></div>
                     <div class="tog">°C <mat-slide-toggle [(ngModel)]="isF" ></mat-slide-toggle> °F</div>
                     <div class="comment">{{weatherData?.current?.condition?.text}}</div>
                 </div>
+                <div class="spinner">
+                    <mat-progress-spinner
+                        color="accent"
+                        mode="determinate"
+                        diameter="100"           
+                        [value]="humidity">
+                    </mat-progress-spinner>
+                    <div class="in-text">{{humidity}}</div>
+                    <div class="humidity">Humidity</div>
+            </div>
+
+            <div class="spinner">
+                <mat-progress-spinner
+                    color="accent"
+                    mode="determinate"
+                    diameter="100"
+                    [value]="cloud">
+                </mat-progress-spinner>
+                <div class="in-text">{{cloud}}</div>
+                <div class="cloud">Cloud</div>
+            </div>
                 <div class="location" >
                     <div class="city">{{weatherData?.location?.name}},</div>
                     <div class="state" >{{weatherData?.location?.region}}, {{weatherData?.location?.country}}.</div> 
@@ -35,43 +56,33 @@
             </div>
         </mat-grid-tile>
 
-        <mat-grid-tile colspan="2" rowspan="1" class="tile3" >
-            
-            <div class="spinner">
-                <mat-progress-spinner
-                    color="accent"
-                    mode="determinate"
-                    diameter="140"           
-                    [value]="humidity">
-                </mat-progress-spinner>
-                <div class="in-text">{{humidity}}</div>
-                <div class="humidity">Humidity</div>
-        </div>
-        <div class="spinner">
-            <mat-progress-spinner
-                color="accent"
-                mode="determinate"
-                diameter="140"
-                [value]="cloud">
-            </mat-progress-spinner>
-            <div class="in-text">{{cloud}}</div>
-            <div class="cloud">Cloud</div>
-        </div>
-        </mat-grid-tile>
+        <mat-grid-tile colspan="3" rowspan="1"  >
+            <div class="tile3">
 
-        <mat-grid-tile colspan="1" rowspan="1"  >
-            <div class="info" (click)="onChangeUnits()">
-                <div *ngIf="isMetric">FEELS LIKE: {{weatherData?.current?.feelslike_c}} °C</div>
-                <div *ngIf="!isMetric">FEELS LIKE: {{weatherData?.current?.feelslike_f}} °F</div>
-                
-                <div *ngIf="isMetric">PRESSURE: {{weatherData?.current?.pressure_mb}} mb</div>
-                <div *ngIf="!isMetric">PRESSURE: {{weatherData?.current?.pressure_in}} in</div>
-                
-                <div *ngIf="isMetric">WIND SPEED: {{weatherData?.current?.wind_kph}} kph</div>
-                <div *ngIf="!isMetric">WIND SPEED: {{weatherData?.current?.wind_mph}} mph</div>
-                <p class="com">*click to chanege units*</p>
+                <div [class]="!disableLeft ? 'arrow' : 'disabledArrow' "  (click)="moveLeft()"  >
+                    <span class="material-icons">
+                        arrow_back_ios
+                    </span>
+                </div>
+                <div class="hourly" >
+                    <div class="oneHour" [class]=" weatherData?.current?.is_day == 1 ? 'oneHourDay' : 'oneHourNight' " *ngFor="let data of hourlyWeather | slice:left:right">
+                        <!-- <div class="iconandtemp"> -->
+                            <img class="icon" [src]="data.condition?.icon" alt="">
+                            <div class="hourlyTemp" *ngIf="!isF" >{{data.temp_c}} <sup class="hourlySup">°C</sup></div>
+                            <div class="hourlyTemp" *ngIf="isF" >{{data.temp_f}} <sup class="hourlySup">°F</sup></div>
+                        <!-- </div> -->
+                        <div>{{toTime(data.time.split(' ', 2)[1])}}</div>
+                    </div>
+                </div>
+                <div [class]="disableRight ? 'disabledArrow' : 'arrow' " (click)="moveRight()" >
+                    <span class="material-icons">
+                        arrow_forward_ios
+                    </span>
+                </div>
+
             </div>
             
         </mat-grid-tile>
+
     </mat-grid-list>
 </div>

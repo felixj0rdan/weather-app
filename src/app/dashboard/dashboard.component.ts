@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { DashboardService } from './dashboard.service';
 import { WeatherData } from './weatherdata.model';
 import * as moment from 'moment';
+import { SlicePipe } from '@angular/common';
 
 export interface Tile {
   color: string;
@@ -30,6 +31,12 @@ export class DashboardComponent implements OnInit {
   public precip_mm = true;
   public isMetric = true;
   public loaded = false;
+  public hourlyWeather: any[] = [];
+  public left = 0;
+  public right = 6;
+  public disableRight = false;
+  public disableLeft = true;
+
 
   // public form: NgForm | undefined ;
 
@@ -42,9 +49,28 @@ export class DashboardComponent implements OnInit {
     this.humidity = 0;
     this.isMetric = true;
     this.loaded = false;  
+    this.left = 0;
+    this.right = 6;
+    this.disableRight = false;
+    this.disableLeft = true; 
+    
+  }
 
-    this.dashboardService
-      .getData("vellore")
+  onSubmit(form: NgForm) {
+      if(form.invalid){
+        return;
+      }
+      // console.log(form.value.location);
+      this.weatherData = undefined;
+      this.humidity = 0;
+      this.cloud = 0;
+      this.left = 0;
+      this.right = 6;
+      this.disableRight = false;
+      this.disableLeft = true;
+
+      this.dashboardService
+      .getData(form.value.location)
       .subscribe(
         async (data: any) => {
 
@@ -55,6 +81,9 @@ export class DashboardComponent implements OnInit {
           }
 
           this.weatherData = data;
+          this.hourlyWeather = data.forecast.forecastday[0].hour;
+          console.log(this.hourlyWeather);
+          
           let i=1, j=1;
 
           this.localTime = this.toTime(data.location.localtime.split(' ', 2)[1]);
@@ -73,16 +102,7 @@ export class DashboardComponent implements OnInit {
           }
 
         }
-      )  
-    
-  }
-
-  onSubmit(form: NgForm) {
-      if(form.invalid){
-        return;
-      }
-      // console.log(form.value.location);
-      this.weatherData = undefined;
+      )
 
       // this.dashboardService
       // .getData(form.value.location)
@@ -139,6 +159,26 @@ export class DashboardComponent implements OnInit {
 
 onChangeUnits() {
   this.isMetric = !this.isMetric;
+}
+moveRight() {
+  if(this.disableRight)
+    return;
+  this.left += 3;
+  this.right += 3;
+  this.disableLeft = false;
+  if(this.right > 23){
+    this.disableRight = true;
+  }
+}
+moveLeft() {
+  if(this.disableLeft)
+    return;
+  this.left -= 3;
+  this.right -= 3;
+  this.disableRight = false;
+  if(this.left == 0){
+    this.disableLeft = true;
+  }
 }
 
 }

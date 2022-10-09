@@ -11,6 +11,9 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { WeathercardComponent } from './weathercard/weathercard.component';
+import { SlicePipe } from '@angular/common';
+
+// import {} from 'material-design-icons-iconfont'
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import { WeathercardComponent } from './weathercard/weathercard.component';
     DashboardComponent,
     HeaderComponent,
     WeathercardComponent,
+    // SlicePipe,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +31,7 @@ import { WeathercardComponent } from './weathercard/weathercard.component';
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    SlicePipe,
   ],
   providers: [],
   bootstrap: [AppComponent]

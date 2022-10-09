@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <h2>Weather</h2>
+    <span class="spacer"></span>
+    <ul>
+        <li *ngIf="!userIsLoggedIn" >
+            <a mat-button routerLinkActive="mat-accent" routerLink="/">Login</a>
+        </li>
+        <li *ngIf="userIsLoggedIn" >
+            <button mat-button (click)="onLogout()" >Logout</button>
+        </li>
+    </ul>
+</mat-toolbar>

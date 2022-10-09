@@ -1,0 +1,7 @@
+{
+    "/v1/*": {
+        "target": "http://api.weatherapi.com",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

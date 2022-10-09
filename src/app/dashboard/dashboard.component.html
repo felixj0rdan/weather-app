@@ -1,0 +1,77 @@
+<mat-card>
+    <form (submit)="onSubmit(locationForm)" #locationForm="ngForm" class="search">
+            <mat-form-field>
+            <input matInput name="location" ngModel type="text"  placeholder="Enter city name" #locationInput="ngModel" required/>
+        </mat-form-field>       
+        <button class="search-btn" mat-raised-button color="accent" type="submit">
+            <mat-icon fontIcon="search"></mat-icon>
+        </button>
+    </form>
+</mat-card><br>
+
+<div *ngIf="loaded">
+    <mat-grid-list cols="3" rowHeight="210px" [class]=" weatherData?.current?.is_day == 1 ? 'day' : 'night' ">
+        <mat-grid-tile colspan="3" rowspan="1" >
+            <div class="tile1" >
+                <div class="current" >
+                    <div class="temp" *ngIf="!isF">{{weatherData?.current?.temp_c}} <sup>°C</sup></div>
+                    <div class="temp" *ngIf="isF">{{weatherData?.current?.temp_f}} <sup>°F</sup></div>
+                    <div class="tog">°C <mat-slide-toggle [(ngModel)]="isF" ></mat-slide-toggle> °F</div>
+                    <div class="comment">{{weatherData?.current?.condition?.text}}</div>
+                </div>
+                <div class="location" >
+                    <div class="city">{{weatherData?.location?.name}},</div>
+                    <div class="state" >{{weatherData?.location?.region}}, {{weatherData?.location?.country}}.</div> 
+                    <div class="state">{{localTime}}</div>
+                    <div class="precip">
+                        <div class="precip_val" *ngIf="precip_mm">Precipitation: {{weatherData?.current?.precip_mm}}</div>
+                        <div class="precip_val" *ngIf="precip_in">Precipitation: {{weatherData?.current?.precip_in}}</div>
+                        <div class="precip_tog">
+                            <button mat-button (click)="onToggle('mm')" [class]="precip_mm ? 'active' : 'inactive' ">mm</button>|<button mat-button (click)="onToggle('in')" [class]="precip_in  ? 'active' : 'inactive' " >in</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2" rowspan="1" class="tile3" >
+            
+            <div class="spinner">
+                <mat-progress-spinner
+                    color="accent"
+                    mode="determinate"
+                    diameter="140"           
+                    [value]="humidity">
+                </mat-progress-spinner>
+                <div class="in-text">{{humidity}}</div>
+                <div class="humidity">Humidity</div>
+        </div>
+        <div class="spinner">
+            <mat-progress-spinner
+                color="accent"
+                mode="determinate"
+                diameter="140"
+                [value]="cloud">
+            </mat-progress-spinner>
+            <div class="in-text">{{cloud}}</div>
+            <div class="cloud">Cloud</div>
+        </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1" rowspan="1"  >
+            <div class="info" (click)="onChangeUnits()">
+                <div *ngIf="isMetric">FEELS LIKE: {{weatherData?.current?.feelslike_c}} °C</div>
+                <div *ngIf="!isMetric">FEELS LIKE: {{weatherData?.current?.feelslike_f}} °F</div>
+                
+                <div *ngIf="isMetric">PRESSURE: {{weatherData?.current?.pressure_mb}} mb</div>
+                <div *ngIf="!isMetric">PRESSURE: {{weatherData?.current?.pressure_in}} in</div>
+                
+                <div *ngIf="isMetric">WIND SPEED: {{weatherData?.current?.wind_kph}} kph</div>
+                <div *ngIf="!isMetric">WIND SPEED: {{weatherData?.current?.wind_mph}} mph</div>
+                <p class="com">*click to chanege units*</p>
+            </div>
+            
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

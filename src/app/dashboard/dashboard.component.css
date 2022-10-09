@@ -1,0 +1,169 @@
+mat-form-field{
+    width: 100%;
+    padding: 3px;
+
+}
+
+mat-card {
+  width: 40%;
+  margin-left: 28%;
+  margin-top: 5px;
+  
+}
+
+mat-progress-spinner {
+  /* border: black solid 1px; */
+  transform: rotate(180deg);
+}
+
+mat-grid-tile {
+  /* border: black solid 1px; */
+}
+
+.spinner{
+  margin: auto;
+  margin-bottom: -43px;
+  
+}
+
+.in-text{
+  position: relative;
+  top: -104px;
+  left: 42px;
+  font-size: 59px;
+}
+
+.humidity{
+  font-size: 18px;
+  position: relative;
+  top: -56px;
+  left: 35px;
+}
+.cloud{
+  font-size: 18px;
+  position: relative;
+  top: -56px;
+  left: 51px;
+}
+
+.tile1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  
+}
+.current {
+  width: 50%;
+  margin: 10px;
+  float: left;
+  margin-left: 45px;
+}
+
+.city {
+  font-size: 55px;
+  font-family: 'Franklin Gothic Medium';
+}
+
+.state{
+  font-size: 28px;
+  font-family: 'Franklin Gothic Medium';
+}
+.time{
+  font-size: 30px;
+  font-family: 'Franklin Gothic Medium';
+}
+.precip{
+  display: flex;
+  margin-top: 10px;
+}
+
+.precip_val{
+  font-size: 20px;
+  margin-top: 7px;
+  font-family: 'Franklin Gothic Medium';
+}
+
+.active{
+  font-weight: bolder;
+  color: black;
+}
+.inactive{
+  /* font-weight: lighter; */
+  color: grey;
+}
+
+.location {
+  /* float: right; */
+  width: 50%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 30px;
+}
+
+.temp{
+  width: fit-content;
+  /* float: right; */
+  font-size: 90px;
+}
+
+sup {
+  font-size: 40px;
+}
+
+.tog {
+  width: fit-content;
+  font-size: 20px;
+  margin-left: 40px;
+  /* margin-top: 5px; */
+
+}
+
+.comment {
+  margin-top: 10px;
+  font-size: 25px;
+}
+
+.rightTile {
+  width: 100%;
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.icon {
+  height: 150px;
+  width: 150px;
+}
+.info{
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.day {
+  background-image: url('../../assets/day2.png');
+}
+
+.night {
+  background-image: url('../../assets/night3.png');
+  color: aliceblue;
+}
+.com{
+  font-size: 11px;
+}
+.search {
+  display: flex;
+}
+
+.search-btn {
+  height: 34px;
+  margin-top: 12px;
+}
